@@ -15,6 +15,18 @@ class Photo: NSManagedObject {
     @NSManaged var imageData: NSData?
     @NSManaged var toLocation: Pin
     
+    
+    
+    convenience init(toLocation: Pin, context : NSManagedObjectContext){
+        
+        if let ent = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context){
+            self.init(entity: ent, insertIntoManagedObjectContext: context)
+            self.toLocation = toLocation
+        }else{
+            fatalError("Unable to find Entity name!")
+        }
+        
+    }
     convenience init(imageData: NSData?, toLocation: Pin, context : NSManagedObjectContext){
         
         if let ent = NSEntityDescription.entityForName("Photo", inManagedObjectContext: context){

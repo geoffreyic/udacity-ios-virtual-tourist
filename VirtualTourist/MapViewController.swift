@@ -22,12 +22,34 @@ class MapViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Get the stack
         let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
         stack = delegate.stack
         
-        // Create a fetchrequest
+        
+        // add annotations
+        mapView.addAnnotations(fetchPins())
+        
+        // add gesture recognizer
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.addLocation(_:)))
+        mapView.addGestureRecognizer(gesture)
+        
+        // set region
+        mapView.setRegion(AppSettings.instance.getRegion(), animated: false)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func fetchPins() -> [Pin]{
+        
         let fr = NSFetchRequest(entityName: "Pin")
         
         var pins:[Pin] = []
@@ -40,25 +62,12 @@ class MapViewController: BaseViewController {
             print("error ocurred while trying to fetch pins")
         }
         
-        // add annotations
-        mapView.addAnnotations(pins)
-        
-        // add gesture recognizer
-        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.addLocation(_:)))
-        mapView.addGestureRecognizer(gesture)
-        
-        // set region
-        mapView.setRegion(AppSettings.instance.getRegion(), animated: false)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        return pins
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if(segue.identifier == "DetailSegue"){
-            let vc = sender!.destinationViewController as! LocationViewController
+            let vc = segue.destinationViewController as! LocationViewController
             vc.pin = sender! as! Pin
         }
     }
@@ -82,50 +91,13 @@ extension MapViewController: MKMapViewDelegate{
             let pinBeingAddedFixed:Pin = pinBeingAdded!
             
             
-            func addLocationCompletion(object: AnyObject!){
+            func addLocationsComplete(object: AnyObject!){
                 
-                
-                func fetchPicturesComplete(imageData: NSData?){
-                    let photo:Photo = Photo(imageData: imageData, toLocation: self.pinBeingAdded!, context: stack.context)
-                    
-                    pinBeingAddedFixed.toPhoto.append(photo)
-                    stack.save()
-                }
-                
-                // parse results
-                guard let photos = object["photos"] as? [String:AnyObject],
-                    let pages = photos["pages"] as? Int32,
-                    let photo = photos["photo"] as? [AnyObject]
-                else{
-                    displayErrorAlert("could not parse Flickr API results")
-                    return
-                }
-                
-                pinBeingAddedFixed.numberPages = pages
-                
-                
-                for obj in photo{
-                    if let obj1 = obj as? [String:AnyObject],
-                        let id = obj1["id"] as? String,
-                        let secret = obj1["secret"] as? String,
-                        let server = obj1["server"] as? String,
-                        let farm = obj1["farm"] as? String
-                    
-                    {
-                        let url = "http://farm" + farm + ".static.flickr.com/" + server + "/" + id + "_" + secret + "_m.jpg"
-                        
-                        FlickrAPI.instance.downloadPhoto(url, completionHandler: fetchPicturesComplete, errorHandler: displayErrorAlert)
-                        
-                    }
-                    
-                }
-                
-                // download photos
-                
-                stack.save()
             }
             
-            FlickrAPI.instance.getPhotosForLocation(location.longitude, latitude: location.latitude, page: 0, perPage: 15, accuracy: 11, completionHandler: addLocationCompletion, errorHandler: displayErrorAlert)
+            mapView.addAnnotation(pinBeingAddedFixed)
+            
+            FlickrAPI.instance.getPhotosForLocation(pinBeingAddedFixed, longitude: location.longitude, latitude: location.latitude, page: 0, perPage: 15, accuracy: 11, errorHandler: displayErrorAlert)
             
         }else if(gestureRecognizer.state == .Cancelled){
             pinBeingAdded = nil
@@ -152,9 +124,13 @@ extension MapViewController: MKMapViewDelegate{
     }
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        view.selected = false
+        mapView.deselectAnnotation(view.annotation, animated: false)
         
-        performSegueWithIdentifier("DetailSegue", sender: view.annotation as! Pin)
+        let pin = view.annotation! as! Pin
+        
+        print (pin.latitude)
+        
+        performSegueWithIdentifier("DetailSegue", sender: pin)
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {

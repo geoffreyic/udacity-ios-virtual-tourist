@@ -15,8 +15,8 @@ class Pin: NSManagedObject, MKAnnotation {
     
     @NSManaged var latitude: Double
     @NSManaged var longitude: Double
-    @NSManaged var numberPages:Int32
-    @NSManaged var toPhoto: [Photo]
+    @NSManaged var numberPages:NSNumber?
+    @NSManaged var toPhoto: NSSet?
     
     convenience init(latitude: Double, longitude: Double, context : NSManagedObjectContext){
         

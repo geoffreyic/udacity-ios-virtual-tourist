@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		142CED481D4163B800147D16 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CED471D4163B800147D16 /* BaseViewController.swift */; };
+		142CED4A1D41712C00147D16 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142CED491D41712C00147D16 /* PhotoCell.swift */; };
 		142E0AC31D3D86B2007617D9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E0AC21D3D86B2007617D9 /* AppSettings.swift */; };
 		142E0AD91D3D9B27007617D9 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E0AD51D3D9B27007617D9 /* Photo.swift */; };
 		142E0ADB1D3D9B27007617D9 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E0AD71D3D9B27007617D9 /* Pin.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		142CED471D4163B800147D16 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		142CED491D41712C00147D16 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		142E0AC21D3D86B2007617D9 /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		142E0AD51D3D9B27007617D9 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		142E0AD71D3D9B27007617D9 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
@@ -61,14 +63,14 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		142E0ADC1D3D9BED007617D9 /* Controllers */ = {
+		142E0ADC1D3D9BED007617D9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				14F6009C1D36EF5C0002896C /* MapViewController.swift */,
 				142E0ADD1D3D9C14007617D9 /* LocationViewController.swift */,
 				142CED471D4163B800147D16 /* BaseViewController.swift */,
 			);
-			name = Controllers;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		14F6008E1D36EF5C0002896C = {
@@ -90,10 +92,10 @@
 		14F600991D36EF5C0002896C /* VirtualTourist */ = {
 			isa = PBXGroup;
 			children = (
-				142E0ADC1D3D9BED007617D9 /* Controllers */,
+				142E0ADC1D3D9BED007617D9 /* ViewControllers */,
 				142E0AC11D3D869E007617D9 /* Settings */,
 				14F600BB1D38322D0002896C /* APIs */,
-				14F600B01D37DCEC0002896C /* ViewControllers */,
+				14F600B01D37DCEC0002896C /* Views */,
 				14F600AF1D37DCD60002896C /* CoreDataModels */,
 				14F6009A1D36EF5C0002896C /* AppDelegate.swift */,
 				14F6009E1D36EF5C0002896C /* Main.storyboard */,
@@ -115,11 +117,12 @@
 			name = CoreDataModels;
 			sourceTree = "<group>";
 		};
-		14F600B01D37DCEC0002896C /* ViewControllers */ = {
+		14F600B01D37DCEC0002896C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				142CED491D41712C00147D16 /* PhotoCell.swift */,
 			);
-			name = ViewControllers;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		14F600BB1D38322D0002896C /* APIs */ = {
@@ -206,6 +209,7 @@
 				142E0ADB1D3D9B27007617D9 /* Pin.swift in Sources */,
 				142CED481D4163B800147D16 /* BaseViewController.swift in Sources */,
 				14F6009D1D36EF5C0002896C /* MapViewController.swift in Sources */,
+				142CED4A1D41712C00147D16 /* PhotoCell.swift in Sources */,
 				142E0ADE1D3D9C14007617D9 /* LocationViewController.swift in Sources */,
 				14F6009B1D36EF5C0002896C /* AppDelegate.swift in Sources */,
 				142E0AD91D3D9B27007617D9 /* Photo.swift in Sources */,

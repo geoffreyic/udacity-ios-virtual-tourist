@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         // Start Autosaving
-        stack.autoSave(5)
+        //stack.autoSave(5)
         
         
         

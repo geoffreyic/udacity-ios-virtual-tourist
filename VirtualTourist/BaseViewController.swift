@@ -20,4 +20,24 @@ class BaseViewController: UIViewController{
         alertController.addAction(okAction)
         self.presentViewController(alertController, animated: true, completion: nil)
     }
+    
+    
+    
+    func askDeleteConfirmation(message: String, cancelAction: ()->(), deleteAction: ()->()){
+        let alertController = UIAlertController(title: "Are you sure?", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (result : UIAlertAction) -> Void in
+            print("Cancel pressed for confirmation message: " + message)
+            cancelAction()
+        }
+        alertController.addAction(cancelAction)
+
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .Destructive) { (result : UIAlertAction) -> Void in
+            print("Delete pressed for confirmation message: " + message)
+            deleteAction()
+        }
+        alertController.addAction(deleteAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 }
