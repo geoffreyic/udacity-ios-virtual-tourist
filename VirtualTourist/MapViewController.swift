@@ -39,14 +39,9 @@ class MapViewController: BaseViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
+        super.viewWillAppear(animated)
+        navigationController?.navigationBarHidden = true
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     
     func fetchPins() -> [Pin]{
         
@@ -58,7 +53,7 @@ class MapViewController: BaseViewController {
             let fetched = try stack.context.executeFetchRequest(fr)
             pins = fetched as! [Pin]
         }catch{
-            // show alert
+            displayErrorAlert("Could not fetch pins from persistant storage")
             print("error ocurred while trying to fetch pins")
         }
         

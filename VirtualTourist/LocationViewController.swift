@@ -56,11 +56,6 @@ class LocationViewController: BaseViewController {
         self.navigationController?.navigationBarHidden = false
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     func sizeAndSpaceItems(size: CGSize){
         
         let itemsInRow:CGFloat = size.width > size.height ? 5.0 : 3.0
